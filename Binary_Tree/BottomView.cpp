@@ -1,4 +1,5 @@
 
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -71,7 +72,7 @@ void printLevelWise(BinaryTreeNode<int> *root) {
 	// Write your code here
 }
 
-void TopView(BinaryTreeNode<int>* root)
+void BottomView(BinaryTreeNode<int>* root)
 {
     map<int,int> mp;
     queue<pair<BinaryTreeNode<int>*,int>> q;
@@ -82,7 +83,7 @@ void TopView(BinaryTreeNode<int>* root)
         BinaryTreeNode<int>* t =q.front().first;
         int h = q.front().second;
         q.pop();
-        if(!mp[h]) mp[h]=t->data;
+        mp[h]=t->data;
         if(t->left) q.push({t->left,h-1});
         if(t->right) q.push({t->right,h+1});
     }
@@ -94,7 +95,7 @@ int main()
 {
     BinaryTreeNode<int>* root = takeInput();
     printLevelWise(root);
-    TopView(root);
+    BottomView(root);
 }
 // 10 20 30 40 50 60 70 80 -1 -1 90 100 -1 -1 110 -1 -1 -1 -1 -1 -1 120 -1 -1 -1
 

@@ -71,32 +71,43 @@ void printLevelWise(BinaryTreeNode<int> *root) {
 	// Write your code here
 }
 
-void TopView(BinaryTreeNode<int>* root)
+vector<int> ZigZag(BinaryTreeNode<int>* root)
 {
-    map<int,int> mp;
-    queue<pair<BinaryTreeNode<int>*,int>> q;
-    if(!root) return;
-    q.push({root,0});
+    vector<int> ans;
+    if(!root) return ans;
+    queue<BinaryTreeNode<int>*> q;
+    q.push(root);
+    int f=1;
     while(!q.empty())
     {
-        BinaryTreeNode<int>* t =q.front().first;
-        int h = q.front().second;
-        q.pop();
-        if(!mp[h]) mp[h]=t->data;
-        if(t->left) q.push({t->left,h-1});
-        if(t->right) q.push({t->right,h+1});
+        vector<int> temp;
+        int sz= q.size();
+        while(sz--)
+        {
+            BinaryTreeNode<int>* t = q.front();
+            q.pop();
+            temp.push_back(t->data);
+            if(t->left) q.push(t->left);
+            if(t->right) q.push(t->right);
+        }
+        if(f%2==0) reverse(temp.begin(),temp.end());
+        for(int i=0;i<temp.size();i++)
+            ans.push_back(temp[i]);
+        f+=1;
     }
-    for(auto x:mp)
-        cout<<x.second<<" ";
+    return ans;
 }
 
 int main()
 {
     BinaryTreeNode<int>* root = takeInput();
     printLevelWise(root);
-    TopView(root);
+    vector<int> ans = ZigZag(root);
+    for(int a:ans)
+        cout<<a<<" ";
 }
 // 10 20 30 40 50 60 70 80 -1 -1 90 100 -1 -1 110 -1 -1 -1 -1 -1 -1 120 -1 -1 -1
+
 
 
 
