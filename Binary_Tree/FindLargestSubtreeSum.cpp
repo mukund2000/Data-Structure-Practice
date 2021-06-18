@@ -70,32 +70,32 @@ void printLevelWise(BinaryTreeNode<int> *root) {
 	// Write your code here
 }
 
-void BottomView(BinaryTreeNode<int>* root)
+int solve(BinaryTreeNode<int>* root,int& ans)
 {
-    map<int,int> mp;
-    queue<pair<BinaryTreeNode<int>*,int>> q;
-    if(!root) return;
-    q.push({root,0});
-    while(!q.empty())
-    {
-        BinaryTreeNode<int>* t =q.front().first;
-        int h = q.front().second;
-        q.pop();
-        mp[h]=t->data;
-        if(t->left) q.push({t->left,h-1});
-        if(t->right) q.push({t->right,h+1});
-    }
-    for(auto x:mp)
-        cout<<x.second<<" ";
+    if(root==NULL)
+        return 0;
+    int curr = root->data+ solve(root->left,ans)+solve(root->right,ans);
+    ans = max(ans,curr);
+    return curr;
 }
 
+int LargestSubtreeSum(BinaryTreeNode<int>* root)
+{
+    if(root==NULL)
+        return 0;
+    int ans = INT_MIN;
+    solve(root,ans);
+    return ans;
+}
 int main()
 {
     BinaryTreeNode<int>* root = takeInput();
     printLevelWise(root);
-    BottomView(root);
+    cout<<"sum of longest subtree: "<<LargestSubtreeSum(root)<<endl;
 }
 // 10 20 30 40 50 60 70 80 -1 -1 90 100 -1 -1 110 -1 -1 -1 -1 -1 -1 120 -1 -1 -1
+
+
 
 
 

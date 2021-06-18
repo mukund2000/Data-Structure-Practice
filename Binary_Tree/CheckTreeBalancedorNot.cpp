@@ -69,33 +69,34 @@ void printLevelWise(BinaryTreeNode<int> *root) {
     }
 	// Write your code here
 }
-
-void BottomView(BinaryTreeNode<int>* root)
+int f;
+int solve(BinaryTreeNode<int>* root)
 {
-    map<int,int> mp;
-    queue<pair<BinaryTreeNode<int>*,int>> q;
-    if(!root) return;
-    q.push({root,0});
-    while(!q.empty())
-    {
-        BinaryTreeNode<int>* t =q.front().first;
-        int h = q.front().second;
-        q.pop();
-        mp[h]=t->data;
-        if(t->left) q.push({t->left,h-1});
-        if(t->right) q.push({t->right,h+1});
-    }
-    for(auto x:mp)
-        cout<<x.second<<" ";
+    if(!root) return 0;
+    int l = solve(root->left);
+    int r = solve(root->right);
+    if(abs(l-r)>1) f=0;
+    return max(l,r)+1;
+}
+int isBalanced(BinaryTreeNode<int>* root)
+{
+    f=1;
+    int ans = solve(root);
+    return f;
 }
 
 int main()
 {
     BinaryTreeNode<int>* root = takeInput();
     printLevelWise(root);
-    BottomView(root);
+    int flag = isBalanced(root);
+    if(flag)
+        cout<<"balanced\n";
+    else
+        cout<<"unbalanced\n";
 }
 // 10 20 30 40 50 60 70 80 -1 -1 90 100 -1 -1 110 -1 -1 -1 -1 -1 -1 120 -1 -1 -1
+
 
 
 
